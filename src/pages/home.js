@@ -7,11 +7,11 @@ import Scream from "../components/Scream";
 const Home = () => {
   const [screams, setScreams] = useState(null);
 
-  // useEffect(() => {
-  //   axios.get("/screams").then((res) => {
-  //     setScreams(res.data);
-  //   }, console.error);
-  // }, []);
+  useEffect(() => {
+    axios.get("/screams").then((res) => {
+      setScreams(res.data);
+    }, console.error);
+  }, []);
 
   return (
     <Grid container>
@@ -21,11 +21,7 @@ const Home = () => {
       <Grid item xs={12} sm={8}>
         {screams ? (
           screams.map((scream) => {
-            return (
-              <Scream key={scream.screamId} {...scream}>
-                {" "}
-              </Scream>
-            );
+            return <Scream key={scream.screamId} {...scream} />;
           })
         ) : (
           <p>Loading...</p>

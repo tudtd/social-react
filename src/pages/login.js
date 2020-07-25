@@ -1,14 +1,17 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
-import axios from "axios";
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 
 // MUI
-import { makeStyles } from "@material-ui/core/styles";
-import TextField from "@material-ui/core/TextField";
-import Typography from "@material-ui/core/Typography";
-import Gird from "@material-ui/core/Grid";
-import Button from "@material-ui/core/Button";
-import CircularProgress from "@material-ui/core/CircularProgress";
+import { makeStyles } from '@material-ui/core/styles';
+import TextField from '@material-ui/core/TextField';
+import Typography from '@material-ui/core/Typography';
+import Gird from '@material-ui/core/Grid';
+import Button from '@material-ui/core/Button';
+import CircularProgress from '@material-ui/core/CircularProgress';
+
+// REDUX
+import { connect } from 'react-redux';
+import { loginUser } from '../actions/user';
 
 const useStyles = makeStyles((theme) => ({
   ...theme.util,
@@ -17,32 +20,26 @@ const useStyles = makeStyles((theme) => ({
 const Login = (props) => {
   const classes = useStyles();
 
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [loading, setLoading] = useState(false);
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  // const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState({});
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
-    setLoading(true);
+    // setLoading(true);
 
     const userData = {
       email: email,
       password: password,
     };
 
-    axios
-      .post("/login", userData)
-      .then((res) => {
-        setLoading(false);
-        localStorage.setItem("FBIdToken", `Bearer ${res.data.token}`);
-        props.history.push("/");
-      })
-      .catch((err) => {
-        setLoading(false);
-        setErrors(err.response.data);
-      });
+    props.loginUser(userData, props.history);
   };
+
+  const {
+    UI: { loading },
+  } = props;
 
   return (
     <div>
@@ -108,4 +105,14 @@ const Login = (props) => {
   );
 };
 
-export default Login;
+const mapStateToProps = (state) => {
+  return {
+    user: state.user,
+    UI: state.UI,
+  };
+};
+
+const mapDispatchToProps = {
+  loginUser,
+};
+export default connect(mapStateToProps, mapDispatchToProps)(Login);

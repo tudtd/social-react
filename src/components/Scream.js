@@ -1,26 +1,26 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React from 'react';
 
 // MUI
-import { makeStyles } from "@material-ui/core/styles";
-import Card from "@material-ui/core/Card";
-import CardHeader from "@material-ui/core/CardHeader";
-import CardContent from "@material-ui/core/CardContent";
-import Avatar from "@material-ui/core/Avatar";
-import IconButton from "@material-ui/core/IconButton";
-import Typography from "@material-ui/core/Typography";
+import { makeStyles } from '@material-ui/core/styles';
+import Card from '@material-ui/core/Card';
+import CardHeader from '@material-ui/core/CardHeader';
+import CardContent from '@material-ui/core/CardContent';
+import Avatar from '@material-ui/core/Avatar';
+import IconButton from '@material-ui/core/IconButton';
+import Typography from '@material-ui/core/Typography';
 
-import dayjs from "dayjs";
-import relativeTime from "dayjs/plugin/relativeTime";
+import dayjs from 'dayjs';
+import relativeTime from 'dayjs/plugin/relativeTime';
 
 dayjs.extend(relativeTime);
 
 const useStyles = makeStyles((theme) => ({
   card: {
-    margin: "20px auto",
+    margin: '20px auto',
+    width: '80%',
   },
   cardHeader: {
-    color: "teal",
+    color: 'teal',
   },
 }));
 
@@ -31,9 +31,9 @@ const Scream = (props) => {
     body,
     userHandle,
     createdAt,
-    commentCount,
-    likeCount,
-    userImage,
+    // commentCount,
+    // likeCount,
+    // userImage,
   } = props;
 
   return (
