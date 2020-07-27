@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
 
 // MUI
 import { makeStyles } from '@material-ui/core/styles';
@@ -22,12 +23,10 @@ const Login = (props) => {
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  // const [loading, setLoading] = useState(false);
-  const [errors, setErrors] = useState({});
+  // const [errors, setErrors] = useState({});
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
-    // setLoading(true);
 
     const userData = {
       email: email,
@@ -38,7 +37,7 @@ const Login = (props) => {
   };
 
   const {
-    UI: { loading },
+    UI: { loading, errors },
   } = props;
 
   return (
@@ -115,4 +114,11 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = {
   loginUser,
 };
+
+Login.propTypes = {
+  user: PropTypes.object.isRequired,
+  UI: PropTypes.object.isRequired,
+  loginUser: PropTypes.func.isRequired,
+};
+
 export default connect(mapStateToProps, mapDispatchToProps)(Login);

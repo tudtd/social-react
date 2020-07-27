@@ -1,6 +1,6 @@
 import { LOADING_UI, SET_ERRORS, CLEAR_ERRORS } from '../constants/actionTypes';
 
-const initialState = { loading: false, errors: null };
+const initialState = { loading: false, errors: {} };
 
 const ui = (state = initialState, action) => {
   switch (action.type) {
@@ -19,7 +19,7 @@ const ui = (state = initialState, action) => {
       return {
         ...state,
         loading: false,
-        errors: null,
+        errors: {},
       };
     default:
       return state;

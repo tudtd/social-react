@@ -1,14 +1,18 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
-import axios from "axios";
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
 
 // MUI
-import { makeStyles } from "@material-ui/core/styles";
-import TextField from "@material-ui/core/TextField";
-import Typography from "@material-ui/core/Typography";
-import Gird from "@material-ui/core/Grid";
-import Button from "@material-ui/core/Button";
-import CircularProgress from "@material-ui/core/CircularProgress";
+import { makeStyles } from '@material-ui/core/styles';
+import TextField from '@material-ui/core/TextField';
+import Typography from '@material-ui/core/Typography';
+import Gird from '@material-ui/core/Grid';
+import Button from '@material-ui/core/Button';
+import CircularProgress from '@material-ui/core/CircularProgress';
+
+// REDUX
+import { connect } from 'react-redux';
+import { signupUser } from '../actions/user';
 
 const useStyles = makeStyles((theme) => ({
   ...theme.util,
@@ -17,36 +21,26 @@ const useStyles = makeStyles((theme) => ({
 const Signup = (props) => {
   const classes = useStyles();
 
-  const [handle, setHandle] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
-  const [loading, setLoading] = useState(false);
-  const [errors, setErrors] = useState({});
+  const [handle, setHandle] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  // const [errors, setErrors] = useState({});
 
+  const {
+    UI: { loading, errors },
+  } = props;
   const handleFormSubmit = (e) => {
     e.preventDefault();
-    setLoading(true);
 
-    const userData = {
+    const newUserData = {
       handle: handle,
       email: email,
       password: password,
       confirmPassword: confirmPassword,
     };
 
-    axios
-      .post("/signup", userData)
-      .then((res) => {
-        setLoading(false);
-        localStorage.setItem("FBIdToken", `Bearer ${res.data.token}`);
-        props.history.push("/");
-      })
-      .catch((err) => {
-        setLoading(false);
-        setErrors(err.response.data);
-        console.log(err.response.data);
-      });
+    props.signupUser(newUserData, props.history);
   };
 
   return (
@@ -136,4 +130,17 @@ const Signup = (props) => {
   );
 };
 
-export default Signup;
+const mapStateToProps = (state) => {
+  return {
+    user: state.user,
+    UI: state.UI,
+  };
+};
+
+Signup.propTypes = {
+  user: PropTypes.object.isRequired,
+  UI: PropTypes.object.isRequired,
+  signupUser: PropTypes.func.isRequired,
+};
+
+export default connect(mapStateToProps, { signupUser })(Signup);

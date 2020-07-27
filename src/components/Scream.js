@@ -17,7 +17,6 @@ dayjs.extend(relativeTime);
 const useStyles = makeStyles((theme) => ({
   card: {
     margin: '20px auto',
-    width: '80%',
   },
   cardHeader: {
     color: 'teal',
