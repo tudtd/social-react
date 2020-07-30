@@ -30,6 +30,7 @@ const Scream = (props) => {
     body,
     userHandle,
     createdAt,
+    imageUrl,
     // commentCount,
     // likeCount,
     // userImage,
@@ -41,12 +42,7 @@ const Scream = (props) => {
         // component={Link}
         // to="/home"
         className={classes.cardHeader}
-        avatar={
-          <Avatar
-            alt={userHandle}
-            src="https://scontent.fsgn5-5.fna.fbcdn.net/v/t1.0-9/36441674_2087936414791185_3335645930501177344_n.jpg?_nc_cat=108&_nc_sid=85a577&_nc_ohc=ISOPAbMecJcAX_uJtev&_nc_ht=scontent.fsgn5-5.fna&oh=05f8cc744c9ea7bb3acd3d47f438562c&oe=5F1F2C6E"
-          />
-        }
+        avatar={<Avatar alt={userHandle} src={imageUrl} />}
         action={<IconButton aria-label="settings"></IconButton>}
         title={userHandle}
         subheader={dayjs(createdAt).fromNow()}
