@@ -1,4 +1,6 @@
 import React, { Fragment, useState, useEffect } from 'react';
+import CustomButton from '../util/CustomButton';
+import PropTypes from 'prop-types';
 
 // MUI
 import { makeStyles } from '@material-ui/core/styles';
@@ -16,7 +18,11 @@ import EditIcon from '@material-ui/icons/Edit';
 import { connect } from 'react-redux';
 import { editUserDetails } from '../actions/user';
 
-const useStyle = makeStyles((theme) => ({}));
+const useStyle = makeStyles((theme) => ({
+  button: {
+    float: 'right',
+  },
+}));
 
 const EditDetails = (props) => {
   const classes = useStyle();
@@ -58,7 +64,9 @@ const EditDetails = (props) => {
 
   return (
     <Fragment>
-      <EditIcon color="primary" onClick={handleClickOpen} />
+      <CustomButton tip="Edit Details" btnClassName={classes.button}>
+        <EditIcon color="primary" onClick={handleClickOpen} />
+      </CustomButton>
       <Dialog
         open={open}
         onClose={handleClose}
@@ -119,5 +127,10 @@ const EditDetails = (props) => {
 const mapStateToProps = (state) => ({
   user: state.user,
 });
+
+EditDetails.propTypes = {
+  user: PropTypes.object.isRequired,
+  editUserDetails: PropTypes.func.isRequired,
+};
 
 export default connect(mapStateToProps, { editUserDetails })(EditDetails);

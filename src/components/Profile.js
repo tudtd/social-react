@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import dayjs from 'dayjs';
 import { Link } from 'react-router-dom';
 import EditDetails from './EditDetails';
+import CustomButton from '../util/CustomButton';
 
 // MUI
 import { makeStyles } from '@material-ui/core/styles';
@@ -10,7 +11,6 @@ import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import MuiLink from '@material-ui/core/Link';
 import Button from '@material-ui/core/Button';
-import Tooltip from '@material-ui/core/Tooltip';
 
 // MUI Icons
 import LinkIcon from '@material-ui/icons/Link';
@@ -107,9 +107,10 @@ const Profile = (props) => {
         <div className={classes.profile}>
           <div className="image-wrapper">
             <img className="profile-image" src={imageUrl} alt="avatar" />
-            <Tooltip title="Edit Profile Image">
+
+            <CustomButton tip="Edit Profile Image">
               <EditIcon color="primary" onClick={handleEditButton} />
-            </Tooltip>
+            </CustomButton>
             <input
               type="file"
               hidden="hidden"
@@ -157,14 +158,12 @@ const Profile = (props) => {
                 <span>Joined {dayjs(createdAt).format('MMM YYYY')}</span>
               </Fragment>
             )}
-
-            <div className={classes.buttons}>
-              <Tooltip title="Logout">
-                <LogoutIcon color="primary" onClick={handleLogout} />
-              </Tooltip>
-
-              <EditDetails />
-            </div>
+          </div>
+          <div>
+            <CustomButton tip="Logout">
+              <LogoutIcon color="primary" onClick={handleLogout} />
+            </CustomButton>
+            <EditDetails />
           </div>
         </div>
       </Paper>
@@ -203,11 +202,9 @@ const Profile = (props) => {
   return profileMarkup;
 };
 
-const mapStateToProps = (state) => {
-  return {
-    user: state.user,
-  };
-};
+const mapStateToProps = (state) => ({
+  user: state.user,
+});
 
 const mapDispatchToProps = {
   uploadUserAvatar,

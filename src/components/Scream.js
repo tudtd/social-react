@@ -1,4 +1,6 @@
 import React from 'react';
+import CustomButton from '../util/CustomButton';
+import PropTypes from 'prop-types';
 
 // MUI
 import { makeStyles } from '@material-ui/core/styles';
@@ -8,9 +10,19 @@ import CardContent from '@material-ui/core/CardContent';
 import Avatar from '@material-ui/core/Avatar';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
+import { Link } from 'react-router-dom';
 
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
+
+// MUI Icons
+import LikeButton from '@material-ui/icons/Favorite';
+import LikeBorderButton from '@material-ui/icons/FavoriteBorder';
+import CommentButton from '@material-ui/icons/Comment';
+
+// REDUX
+import { connect } from 'react-redux';
+import { likeScream, unlikeScream } from '../actions/data';
 
 dayjs.extend(relativeTime);
 
@@ -31,11 +43,41 @@ const Scream = (props) => {
     userHandle,
     createdAt,
     imageUrl,
-    // commentCount,
-    // likeCount,
-    // userImage,
+    commentCount,
+    likeCount,
+    userImage,
+    screamId,
   } = props;
 
+  const { authenticated, likes } = props.user;
+  const likedScream = () => {
+    if (likes && likes.find((like) => like.screamId === screamId)) return true;
+    else return false;
+  };
+
+  const handleLike = () => {
+    props.likeScream(screamId);
+  };
+
+  const handleUnlike = () => {
+    props.unlikeScream(screamId);
+  };
+
+  const likeButton = !authenticated ? (
+    <CustomButton tip="Like">
+      <Link to="/login">
+        <LikeButton color="primary" />
+      </Link>
+    </CustomButton>
+  ) : likedScream() ? (
+    <CustomButton tip="Unlike" onClick={handleUnlike}>
+      <LikeButton color="primary" />
+    </CustomButton>
+  ) : (
+    <CustomButton tip="Like" onClick={handleLike}>
+      <LikeBorderButton color="primary" />
+    </CustomButton>
+  );
   return (
     <Card className={classes.card}>
       <CardHeader
@@ -53,8 +95,30 @@ const Scream = (props) => {
           {body}
         </Typography>
       </CardContent>
+
+      {likeButton}
+      <span>{likeCount} likes</span>
+
+      <CustomButton tip="Comments">
+        <CommentButton color="primary" />
+      </CustomButton>
+      <span>{commentCount} comments</span>
     </Card>
   );
 };
 
-export default Scream;
+const mapStateToProps = (state) => ({
+  user: state.user,
+});
+
+const mapDispatchToProps = {
+  likeScream,
+  unlikeScream,
+};
+
+Scream.propTypes = {
+  likeScream: PropTypes.func.isRequired,
+  unlikeScream: PropTypes.func.isRequired,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Scream);

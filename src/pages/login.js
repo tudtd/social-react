@@ -104,12 +104,10 @@ const Login = (props) => {
   );
 };
 
-const mapStateToProps = (state) => {
-  return {
-    user: state.user,
-    UI: state.UI,
-  };
-};
+const mapStateToProps = (state) => ({
+  user: state.user,
+  UI: state.UI,
+});
 
 const mapDispatchToProps = {
   loginUser,

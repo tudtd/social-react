@@ -22,6 +22,9 @@ import store from './store';
 import { SET_AUTHENTICATED } from './constants/actionTypes';
 import { logoutUser, getUserData } from './actions/user';
 
+axios.defaults.baseURL =
+  'https://asia-east2-tdapi-1573539397171.cloudfunctions.net/api';
+
 const theme = createMuiTheme(themeFile);
 
 function App() {
@@ -29,7 +32,6 @@ function App() {
 
   if (token) {
     const decodedToken = jwtDecode(token);
-    console.log(decodedToken);
 
     if (decodedToken.exp * 1000 < Date.now()) {
       store.dispatch(logoutUser());
