@@ -1,6 +1,10 @@
 import React from 'react';
 import CustomButton from '../util/CustomButton';
 import PropTypes from 'prop-types';
+import dayjs from 'dayjs';
+import relativeTime from 'dayjs/plugin/relativeTime';
+import DeleteScream from './DeleteScream';
+import Comments from './Comments';
 
 // MUI
 import { makeStyles } from '@material-ui/core/styles';
@@ -12,9 +16,6 @@ import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import { Link } from 'react-router-dom';
 
-import dayjs from 'dayjs';
-import relativeTime from 'dayjs/plugin/relativeTime';
-
 // MUI Icons
 import LikeButton from '@material-ui/icons/Favorite';
 import LikeBorderButton from '@material-ui/icons/FavoriteBorder';
@@ -22,7 +23,7 @@ import CommentButton from '@material-ui/icons/Comment';
 
 // REDUX
 import { connect } from 'react-redux';
-import { likeScream, unlikeScream } from '../actions/data';
+import { likeScream, unlikeScream, deleteScream } from '../actions/data';
 
 dayjs.extend(relativeTime);
 
@@ -42,14 +43,20 @@ const Scream = (props) => {
     body,
     userHandle,
     createdAt,
-    imageUrl,
+    // imageUrl,
     commentCount,
     likeCount,
     userImage,
     screamId,
+    comments,
   } = props;
 
-  const { authenticated, likes } = props.user;
+  const {
+    authenticated,
+    likes,
+    credentials: { handle },
+  } = props.user;
+
   const likedScream = () => {
     if (likes && likes.find((like) => like.screamId === screamId)) return true;
     else return false;
@@ -78,13 +85,19 @@ const Scream = (props) => {
       <LikeBorderButton color="primary" />
     </CustomButton>
   );
+
+  const deleteScream =
+    authenticated && userHandle === handle ? (
+      <DeleteScream screamId={screamId} />
+    ) : null;
+
   return (
     <Card className={classes.card}>
       <CardHeader
         // component={Link}
         // to="/home"
         className={classes.cardHeader}
-        avatar={<Avatar alt={userHandle} src={imageUrl} />}
+        avatar={<Avatar alt={userHandle} src={userImage} />}
         action={<IconButton aria-label="settings"></IconButton>}
         title={userHandle}
         subheader={dayjs(createdAt).fromNow()}
@@ -99,10 +112,14 @@ const Scream = (props) => {
       {likeButton}
       <span>{likeCount} likes</span>
 
+      {deleteScream}
+
       <CustomButton tip="Comments">
         <CommentButton color="primary" />
       </CustomButton>
       <span>{commentCount} comments</span>
+
+      <Comments comments={comments} userImage={userImage} screamId={screamId} />
     </Card>
   );
 };
@@ -114,6 +131,7 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = {
   likeScream,
   unlikeScream,
+  deleteScream,
 };
 
 Scream.propTypes = {

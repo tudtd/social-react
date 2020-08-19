@@ -12,8 +12,10 @@ import { getScreams } from '../actions/data';
 const Home = (props) => {
   const { screams, loading } = props.data;
 
+  const { getScreams } = props;
+
   useEffect(() => {
-    props.getScreams();
+    getScreams();
   }, []);
 
   return (

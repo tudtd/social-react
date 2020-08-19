@@ -64,8 +64,12 @@ const EditDetails = (props) => {
 
   return (
     <Fragment>
-      <CustomButton tip="Edit Details" btnClassName={classes.button}>
-        <EditIcon color="primary" onClick={handleClickOpen} />
+      <CustomButton
+        tip="Edit Details"
+        btnClassName={classes.button}
+        onClick={handleClickOpen}
+      >
+        <EditIcon color="primary" />
       </CustomButton>
       <Dialog
         open={open}

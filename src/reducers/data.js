@@ -4,6 +4,9 @@ import {
   LOADING_DATA,
   LIKE_SCREAM,
   UNLIKE_SCREAM,
+  DELETE_SCREAM,
+  ADD_SCREAM,
+  SUBMIT_COMMENT,
 } from '../constants/actionTypes';
 
 const initialState = {
@@ -42,6 +45,24 @@ export default (state = initialState, action) => {
       }
       return {
         ...state,
+      };
+    case DELETE_SCREAM:
+      let deleteIndex = state.screams.findIndex(
+        (scream) => scream.screamId === action.payload
+      );
+      state.screams.splice(deleteIndex, 1);
+      return {
+        ...state,
+      };
+    case ADD_SCREAM:
+      return {
+        ...state,
+        screams: [action.payload, ...state.screams],
+      };
+    case SUBMIT_COMMENT:
+      return {
+        ...state,
+        scream: [action.payload, ...state.scream.comments],
       };
     default:
       return state;

@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import CustomButton from '../util/CustomButton';
 import PropTypes from 'prop-types';
+import AddScream from '../components/AddScream';
 
 //MUI
 import AppBar from '@material-ui/core/AppBar';
@@ -9,7 +10,7 @@ import ToolBar from '@material-ui/core/Toolbar';
 import Button from '@material-ui/core/Button';
 
 // MUI Icons
-import AddIcon from '@material-ui/icons/Add';
+
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import HomeIcon from '@material-ui/icons/Home';
 
@@ -25,9 +26,10 @@ const Navbar = ({ authenticated }) => {
             <HomeIcon />
           </CustomButton>
         </Link>
-        <CustomButton tip="Add a Scream">
+        {/* <CustomButton tip="Add a Scream">
           <AddIcon />
-        </CustomButton>
+        </CustomButton> */}
+        <AddScream />
         <CustomButton tip="Notifications">
           <NotificationsIcon />
         </CustomButton>

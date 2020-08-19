@@ -108,8 +108,8 @@ const Profile = (props) => {
           <div className="image-wrapper">
             <img className="profile-image" src={imageUrl} alt="avatar" />
 
-            <CustomButton tip="Edit Profile Image">
-              <EditIcon color="primary" onClick={handleEditButton} />
+            <CustomButton tip="Edit Profile Image" onClick={handleEditButton}>
+              <EditIcon color="primary" />
             </CustomButton>
             <input
               type="file"
@@ -144,7 +144,7 @@ const Profile = (props) => {
             {website && (
               <Fragment>
                 <LinkIcon color="primary" />
-                <a href={website} target="_blank" rel="noopener noreferer">
+                <a href={website} target="_blank" rel="noopener noreferrer">
                   {' '}
                   {website}
                 </a>
@@ -160,8 +160,8 @@ const Profile = (props) => {
             )}
           </div>
           <div>
-            <CustomButton tip="Logout">
-              <LogoutIcon color="primary" onClick={handleLogout} />
+            <CustomButton tip="Logout" onClick={handleLogout}>
+              <LogoutIcon color="primary" />
             </CustomButton>
             <EditDetails />
           </div>
